@@ -1,20 +1,13 @@
-package com.demo.entities;
+package com.demo.dto;
 
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.demo.entities.Price;
 
-@Entity
-@Table(name = "product_variant")
-public class ProductVariant {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+
+public class ProductVariantDto {
 	private long id;
 	
 	@Column(nullable = false, unique = true)
@@ -26,7 +19,7 @@ public class ProductVariant {
 	private Set<Price> prices;
 	
 	
-	public ProductVariant() {
+	public ProductVariantDto() {
 		super();
 	}
 

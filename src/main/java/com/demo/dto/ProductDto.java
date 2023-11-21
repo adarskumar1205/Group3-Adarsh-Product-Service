@@ -1,46 +1,27 @@
-package com.demo.entities;
+package com.demo.dto;
 
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import com.demo.entities.ProductCategory;
+import com.demo.entities.ProductVariant;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "products")
-public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class ProductDto {
 	private long id;
 	
-	@Column(nullable = false, unique = true)
 	private String productKey;
 	
 	private String name;
 	private String description;
 	
-	@OneToOne
-	private ProductType productType;
-	
-	@OneToMany(cascade = CascadeType.ALL)
     private Set<ProductCategory> categories;
 	
-	@OneToOne(cascade = CascadeType.ALL)
 	private ProductVariant masterVariant;
 	
-	@OneToMany(cascade = CascadeType.ALL)
 	private Set<ProductVariant> variants;
 	
+	private String productTypeKey;
 	
-	public Product() {
+	public ProductDto() {
 		super();
 	}
 	public long getId() {
@@ -86,11 +67,11 @@ public class Product {
 	public void setVariants(Set<ProductVariant> variants) {
 		this.variants = variants;
 	}
-	public ProductType getProductType() {
-		return productType;
+	public String getProductTypeKey() {
+		return productTypeKey;
 	}
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
+	public void setProductTypeKey(String productTypeKey) {
+		this.productTypeKey = productTypeKey;
 	}
 	
 	

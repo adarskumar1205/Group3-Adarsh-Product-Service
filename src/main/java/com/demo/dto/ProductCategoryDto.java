@@ -1,32 +1,16 @@
-package com.demo.entities;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.demo.dto;
 
 
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "categories")
-public class ProductCategory {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class ProductCategoryDto {
 	private long id;
 	
-	@Column(nullable = false, unique = true)
 	private String categoryKey;
 	
 	private String name;
 	private String description;
 	
-	
-    
-	
-	public ProductCategory() {
+	public ProductCategoryDto() {
 		super();
 	}
 	public long getId() {
@@ -54,5 +38,5 @@ public class ProductCategory {
 		this.description = description;
 	}
 
-	
+
 }
