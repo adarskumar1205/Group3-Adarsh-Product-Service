@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dto.ProductCategoryDto;
+import com.demo.dto.ProductTypeDto;
 import com.demo.dto.ProductVariantDto;
 import com.demo.entities.ProductCategory;
 import com.demo.entities.ProductVariant;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.repositories.ProductCategoryRepository;
 import com.demo.repositories.ProductVariantRepository;
 import com.demo.services.ProductCategoryService;
@@ -38,8 +40,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		// TODO Auto-generated method stub
 		ProductCategory productCategory = productCategoryRepository.findByCategoryKey(productCategoryKey);
 		
+		if(productCategory!=null) {
+			return mapper.map(productCategory, ProductCategoryDto.class);
+		}
+		else
+			throw new ResourceNotFoundException("ProductCategory", "ProducCategoryKey", productCategoryKey);
 		
-		return mapper.map(productCategory, ProductCategoryDto.class);
 	}
 
 	@Override
@@ -58,7 +64,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		ProductCategory productCategory = productCategoryRepository.findByCategoryKey(productCategoryKey);
 		
 		if(productCategory!=null) {
-			productCategory.setId(productCategoryDto.getId());
 			productCategory.setCategoryKey(productCategoryDto.getCategoryKey());
 			productCategory.setName(productCategoryDto.getName());
 			productCategory.setDescription(productCategoryDto.getDescription());
@@ -67,7 +72,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 			
 			return mapper.map(savedProductCategory,ProductCategoryDto.class);
 		}
-		return null;
+		else
+			throw new ResourceNotFoundException("ProductCategory", "ProducCategoryKey", productCategoryKey);
 	}
 
 	@Override
@@ -80,7 +86,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 			
 			return mapper.map(productCategory,ProductCategoryDto.class);
 		}
-		return null;
+		else
+			throw new ResourceNotFoundException("ProductCategory", "ProducCategoryKey", productCategoryKey);
 	}
 
 }

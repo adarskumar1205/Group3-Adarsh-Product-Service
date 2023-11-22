@@ -1,23 +1,27 @@
 package com.demo.dto;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.demo.entities.Price;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 
 public class ProductVariantDto {
 	private long id;
-	
-	@Column(nullable = false, unique = true)
 	private String productVariantKey;
-	
 	private int sku;
-
-	@OneToMany
 	private Set<Price> prices;
-	
+	@ElementCollection
+	@CollectionTable(name = "Attributes", joinColumns = {@JoinColumn(name = "products_variants_id", referencedColumnName = "id")})
+	@MapKeyColumn(name = "DefinationName")
+	@Column(name = "DefinationType")
+	private Map<String, String> attributes;
 	
 	public ProductVariantDto() {
 		super();
@@ -53,6 +57,14 @@ public class ProductVariantDto {
 
 	public void setPrices(Set<Price> prices) {
 		this.prices = prices;
+	}
+
+	public Map<String, String> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, String> attributes) {
+		this.attributes = attributes;
 	}
 	
 	

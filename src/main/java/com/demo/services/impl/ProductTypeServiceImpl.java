@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dto.ProductTypeDto;
+import com.demo.dto.ProductVariantDto;
 import com.demo.entities.ProductType;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.repositories.ProductTypeRepository;
 import com.demo.services.ProductTypeService;
 
@@ -34,7 +36,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 		// TODO Auto-generated method stub
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
-		return mapper.map(productType, ProductTypeDto.class);
+		if(productType!=null) {
+			return mapper.map(productType, ProductTypeDto.class);
+		}
+		else
+			throw new ResourceNotFoundException("ProductType", "ProducTypeKey", productTypeKey);
+		
 	}
 
 	@Override
@@ -55,7 +62,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
 		if(productType!=null) {
-			productType.setId(productTypeDto.getId());
 			productType.setProductTypeKey(productTypeDto.getProductTypeKey());
 			productType.setAttributeDefination(productTypeDto.getAttributeDefination());
 			
@@ -63,22 +69,23 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 			
 			return mapper.map(savedProductType, ProductTypeDto.class);
 		}
-		
-		return null;
+		else
+			throw new ResourceNotFoundException("ProductType", "ProducTypeKey", productTypeKey);
 	}
 
 	@Override
-	public ProductTypeDto deleteProductType(String productTypeKey) {
+	public ProductType deleteProductType(String productTypeKey) {
 		// TODO Auto-generated method stub
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
 		if(productType!=null) {
 			productTypeRepository.delete(productType);
 			
-			return mapper.map(productType, ProductTypeDto.class);
+			return productType;
 		}
-		
-		return null;
+		else
+			throw new ResourceNotFoundException("ProductType", "ProducTypeKey", productTypeKey);
 	}
 
+	
 }

@@ -3,6 +3,7 @@ package com.demo.dto;
 import java.util.Set;
 
 import com.demo.entities.ProductCategory;
+import com.demo.entities.ProductType;
 import com.demo.entities.ProductVariant;
 
 public class ProductDto {
@@ -18,7 +19,7 @@ public class ProductDto {
 	private ProductVariant masterVariant;
 	
 	private Set<ProductVariant> variants;
-	
+
 	private String productTypeKey;
 	
 	public ProductDto() {
@@ -73,7 +74,6 @@ public class ProductDto {
 	public void setProductTypeKey(String productTypeKey) {
 		this.productTypeKey = productTypeKey;
 	}
-	
 	
 
 }

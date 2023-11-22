@@ -1,7 +1,5 @@
 package com.demo.dto;
 
-
-
 public class ProductCategoryDto {
 	private long id;
 	

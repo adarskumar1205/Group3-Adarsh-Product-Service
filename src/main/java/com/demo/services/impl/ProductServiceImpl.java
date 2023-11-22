@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dto.ProductDto;
+import com.demo.dto.ProductTypeDto;
 import com.demo.entities.Product;
 import com.demo.entities.ProductType;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.repositories.ProductRepository;
 import com.demo.repositories.ProductTypeRepository;
 import com.demo.services.ProductService;
@@ -43,8 +45,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDto getProductByKey(String productKey) {
 		// TODO Auto-generated method stub
+		Product product = productRepository.findByProductKey(productKey);
 		
-		return mapper.map(productRepository.findByProductKey(productKey),ProductDto.class);
+		if(product!=null) {
+			return mapper.map(product,ProductDto.class);
+		}
+		else
+			throw new ResourceNotFoundException("Product", "ProductKey", productKey);
+		
 	}
 
 	@Override
@@ -76,16 +84,22 @@ public class ProductServiceImpl implements ProductService {
 
 			return mapper.map(savedProduct, ProductDto.class);
 		}
-
-		return null;
+		else
+			throw new ResourceNotFoundException("Product", "ProducKey", productKey);
 	}
 
 	@Override
-	public void deleteProduct(String productKey) {
+	public ProductDto deleteProduct(String productKey) {
 		// TODO Auto-generated method stub
 		Product product = productRepository.findByProductKey(productKey);
 		
-		productRepository.delete(product);
+		if(product!=null) {
+			productRepository.delete(product);
+			return mapper.map(product,ProductDto.class);
+		}
+		else
+			throw new ResourceNotFoundException("Product", "ProducKey", productKey);
+		
 	}
 
 	

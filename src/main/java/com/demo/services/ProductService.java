@@ -9,6 +9,6 @@ public interface ProductService {
 	 ProductDto getProductByKey(String productKey);
 	 List<ProductDto> getAllProducts();
 	 ProductDto updateProduct(ProductDto productDto,String productKey);
-	 void deleteProduct(String productKey);
+	 ProductDto deleteProduct(String productKey);
 
 }

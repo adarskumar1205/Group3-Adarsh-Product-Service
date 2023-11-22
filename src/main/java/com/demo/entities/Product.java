@@ -27,7 +27,7 @@ public class Product {
 	private String name;
 	private String description;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private ProductType productType;
 	
 	@OneToMany(cascade = CascadeType.ALL)

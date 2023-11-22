@@ -7,9 +7,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.demo.dto.ProductVariantDto;
+
 import com.demo.entities.ProductVariant;
-import com.demo.repositories.ProductTypeRepository;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.repositories.ProductVariantRepository;
 import com.demo.services.ProductVariantService;
 
@@ -38,8 +40,12 @@ public class ProductVariantServiceImpl implements ProductVariantService {
 		
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
 		
+		if(productVariant!=null) {
+			return mapper.map(productVariant, ProductVariantDto.class);
+		}
+		else
+			throw new ResourceNotFoundException("ProductVariant", "ProducVariantKey", producVariantKey);
 		
-		return mapper.map(productVariant, ProductVariantDto.class);
 	}
 
 	@Override
@@ -59,29 +65,37 @@ public class ProductVariantServiceImpl implements ProductVariantService {
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
 		
 		if(productVariant!=null) {
-			productVariant.setId(productVariantDto.getId());
 			productVariant.setProductVariantKey(productVariantDto.getProductVariantKey());
 			productVariant.setSku(productVariantDto.getSku());
 			productVariant.setPrices(productVariantDto.getPrices());
+			productVariant.setAttributes(productVariant.getAttributes());
 			
 			ProductVariant savedProductVariant = productVariantRepository.save(productVariant);
 			
 			return mapper.map(savedProductVariant,ProductVariantDto.class);
 		}
-		return null;
+		else {
+			throw new ResourceNotFoundException("ProductVariant", "ProducVariantKey", producVariantKey);
+		}
+		
 	}
 
 	@Override
-	public ProductVariantDto deleteProductVariant(String producVariantKey) {
+	public ProductVariant deleteProductVariant(String producVariantKey) {
 		// TODO Auto-generated method stub
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
 		
 		if(productVariant!=null) {
 			productVariantRepository.delete(productVariant);
+			return productVariant;
 			
-			return mapper.map(productVariant,ProductVariantDto.class);
 		}
-		return null;
+		else {
+			throw new ResourceNotFoundException("ProductVariant", "ProducVariantKey", producVariantKey);
+		}
+		
 	}
+	
+	
 
 }

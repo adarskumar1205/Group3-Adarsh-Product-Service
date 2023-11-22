@@ -1,17 +1,8 @@
-package com.demo.entities;
+package com.demo.dto;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "prices")
-public class Price {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class PriceDto {
 	private long id;
 	
 	@Column(nullable = false, unique = true)
@@ -22,7 +13,7 @@ public class Price {
 	private String currency;
 	
 	
-	public Price() {
+	public PriceDto() {
 		super();
 	}
 	public long getId() {
@@ -56,7 +47,5 @@ public class Price {
 		this.currency = currency;
 	}
 	
-	
-
 
 }
