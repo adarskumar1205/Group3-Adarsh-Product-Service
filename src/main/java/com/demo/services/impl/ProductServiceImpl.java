@@ -102,5 +102,18 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 
+	@Override
+	public List<ProductDto> getAllProductsByName(String name) {
+		// TODO Auto-generated method stub
+		List<ProductDto> list = productRepository.findByName(name)
+								.stream()
+								.map((product)->mapper.map(product, ProductDto.class))
+								.collect(Collectors.toList());
+
+		return list;
+	}
+
+	
+
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.ProductDto;
@@ -39,6 +40,12 @@ public class ProductController {
 	public ResponseEntity<List<ProductDto>> getAllProducts() {
 		return ResponseEntity.ok(productService.getAllProducts());
 	}
+	
+	@GetMapping("/query")
+	public ResponseEntity<List<ProductDto>> getAllProductsByName(@RequestParam(value = "name",required = false)  String productName) {
+		return ResponseEntity.ok(productService.getAllProductsByName(productName));
+	}
+	
 	
 	@PutMapping("/{productKey}")
 	public ResponseEntity<ProductDto> updateProductByKey(@RequestBody ProductDto productDto,
