@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.PriceDto;
+<<<<<<< HEAD
 import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.services.PriceService;
 
 import jakarta.validation.Valid;
 
+=======
+import com.demo.services.PriceService;
+
+>>>>>>> 9063362879ab31aedcce476500d8bfad93409ba8
 @RestController
 @RequestMapping("/api/prices")
 public class PriceController {
@@ -27,7 +32,11 @@ public class PriceController {
 
 
 	@PostMapping
+<<<<<<< HEAD
     public ResponseEntity<PriceDto> createPrice(@Valid @RequestBody PriceDto priceDto) {
+=======
+    public ResponseEntity<PriceDto> createPrice(@RequestBody PriceDto priceDto) {
+>>>>>>> 9063362879ab31aedcce476500d8bfad93409ba8
         PriceDto createdPrice = priceService.createPrice(priceDto);
         return new ResponseEntity<>(createdPrice, HttpStatus.CREATED);
     }
@@ -40,7 +49,11 @@ public class PriceController {
     }
     
     @GetMapping("/{priceId}")
+<<<<<<< HEAD
     public ResponseEntity<PriceDto> getPriceById(@PathVariable String priceKey) throws ResourceNotFoundException {
+=======
+    public ResponseEntity<PriceDto> getPriceById(@PathVariable String priceKey) {
+>>>>>>> 9063362879ab31aedcce476500d8bfad93409ba8
         PriceDto priceDto = priceService.getPriceByKey(priceKey);
         return new ResponseEntity<>(priceDto, HttpStatus.OK);
                

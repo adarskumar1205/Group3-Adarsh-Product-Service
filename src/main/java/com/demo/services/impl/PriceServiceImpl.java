@@ -30,7 +30,11 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
+<<<<<<< HEAD
     public PriceDto getPriceByKey(String priceKey) throws ResourceNotFoundException {
+=======
+    public PriceDto getPriceByKey(String priceKey) {
+>>>>>>> 9063362879ab31aedcce476500d8bfad93409ba8
         Price price = priceRepository.findByPriceKey(priceKey);
         
         		if(price!=null) {
