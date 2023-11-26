@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.ProductDto;
 import com.demo.dto.ProductVariantDto;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.services.ProductVariantService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/productVariants")
@@ -27,13 +30,13 @@ public class ProductVariantController {
 	private ProductVariantService productVariantService;
 	
 	@PostMapping
-    public ResponseEntity<ProductVariantDto> createProductVariant(@RequestBody ProductVariantDto productVariantDTO) {
+    public ResponseEntity<ProductVariantDto> createProductVariant(@Valid@RequestBody ProductVariantDto productVariantDTO) {
         ProductVariantDto createdProductVariant = productVariantService.createProductVariant(productVariantDTO);
         return new ResponseEntity<>(createdProductVariant, HttpStatus.CREATED);
     } 
 	
 	@GetMapping("/{productVariantKey}")
-	public ResponseEntity<ProductVariantDto> getProductVariantByKey(@PathVariable("productVariantKey") String productVariantKey) {
+	public ResponseEntity<ProductVariantDto> getProductVariantByKey(@PathVariable("productVariantKey") String productVariantKey) throws ResourceNotFoundException {
 		ProductVariantDto productVariantDto = productVariantService.getProductVariant(productVariantKey);
 		return ResponseEntity.ok(productVariantDto);
 	}
@@ -46,7 +49,7 @@ public class ProductVariantController {
 	
 	@PutMapping("/{productVariantKey}")
 	public ResponseEntity<ProductVariantDto> updateProductVaraintByKey(@RequestBody ProductVariantDto productVariantDto,
-														@PathVariable("productVariantKey") String productVariantKey) {
+														@PathVariable("productVariantKey") String productVariantKey) throws ResourceNotFoundException {
 		ProductVariantDto updateProductVariantDto = productVariantService.updateProductVariant(productVariantDto,productVariantKey);
 		if (updateProductVariantDto != null) {
 	        return new ResponseEntity<>(updateProductVariantDto, HttpStatus.OK);
@@ -56,7 +59,7 @@ public class ProductVariantController {
 	}
 	
 	@DeleteMapping("/{productVariantKey}")
-	public ResponseEntity<String> deleteProductByKey(@PathVariable("productVariantKey") String productVariantKey) {
+	public ResponseEntity<String> deleteProductByKey(@PathVariable("productVariantKey") String productVariantKey) throws ResourceNotFoundException {
 		productVariantService.deleteProductVariant(productVariantKey);
 		return  ResponseEntity.ok("variant deleted successfully");
 	}

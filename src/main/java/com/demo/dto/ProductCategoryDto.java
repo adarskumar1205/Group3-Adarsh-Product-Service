@@ -1,10 +1,17 @@
 package com.demo.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class ProductCategoryDto {
 	private long id;
 	
+	@NotBlank
+	@Size(min=3,message = "Product Category Key should have atleast 3 characters")
 	private String categoryKey;
 	
+	@NotBlank
+	@Size(min=3,message = "Product Category Key should have atleast 3 characters")
 	private String name;
 	private String description;
 	

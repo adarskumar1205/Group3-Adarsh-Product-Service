@@ -2,15 +2,24 @@ package com.demo.dto;
 
 import java.util.Set;
 
+
+
 import com.demo.entities.ProductCategory;
-import com.demo.entities.ProductType;
+
 import com.demo.entities.ProductVariant;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class ProductDto {
 	private long id;
 	
+	@NotEmpty
+	@Size(min=3,message = "Product Key should have atleast 3 characters")
 	private String productKey;
 	
+	@NotEmpty
+	@Size(min=3,message = "Product name should have atleast 3 characters")
 	private String name;
 	private String description;
 	

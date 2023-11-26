@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.ProductCategoryDto;
 import com.demo.entities.ProductCategory;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.services.ProductCategoryService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -26,13 +29,13 @@ public class ProductCategoryController {
 
 	
 	@PostMapping
-	public ResponseEntity<ProductCategoryDto> createProductCategory(@RequestBody ProductCategoryDto categoryDto){
+	public ResponseEntity<ProductCategoryDto> createProductCategory(@Valid@RequestBody ProductCategoryDto categoryDto){
 		ProductCategoryDto savedCategoryDto = productCategoryService.createProductCategory(categoryDto);
         return new ResponseEntity<>(savedCategoryDto, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{categoryKey}")
-    public ResponseEntity<ProductCategoryDto> getCategoryByKey(@PathVariable("categoryKey") String categoryKey){
+    public ResponseEntity<ProductCategoryDto> getCategoryByKey(@PathVariable("categoryKey") String categoryKey) throws ResourceNotFoundException{
 		ProductCategoryDto categoryDto = productCategoryService.getProductCategory(categoryKey);
          return ResponseEntity.ok(categoryDto);
     }
@@ -43,14 +46,14 @@ public class ProductCategoryController {
 	}
 	
 	@DeleteMapping("/{categoryKey}")
-	public ResponseEntity<ProductCategoryDto> deleteCategoryByKey(@PathVariable("categoryKey") String categoryKey) {
+	public ResponseEntity<ProductCategoryDto> deleteCategoryByKey(@PathVariable("categoryKey") String categoryKey) throws ResourceNotFoundException {
 		ProductCategoryDto category = productCategoryService.deleteProductCategory(categoryKey);
 		return ResponseEntity.ok(category);
 	}
 	
 	@PutMapping("/{categoriesKey}")
 	public ResponseEntity<ProductCategoryDto> updateCategoryByKey(@RequestBody ProductCategoryDto categoryDto,
-														@PathVariable("categoriesKey") String categoryKey) {
+														@PathVariable("categoriesKey") String categoryKey) throws ResourceNotFoundException {
 		ProductCategoryDto updateCategoryDto = productCategoryService.updateProductCategory(categoryDto,categoryKey);
 		if (updateCategoryDto != null) {
 	        return new ResponseEntity<>(updateCategoryDto, HttpStatus.OK);

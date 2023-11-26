@@ -32,7 +32,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	}
 
 	@Override
-	public ProductTypeDto getProductType(String productTypeKey) {
+	public ProductTypeDto getProductType(String productTypeKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
@@ -57,7 +57,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	}
 
 	@Override
-	public ProductTypeDto updateProductType(ProductTypeDto productTypeDto, String productTypeKey) {
+	public ProductTypeDto updateProductType(ProductTypeDto productTypeDto, String productTypeKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
@@ -74,14 +74,14 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	}
 
 	@Override
-	public ProductType deleteProductType(String productTypeKey) {
+	public void deleteProductType(String productTypeKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductType productType = productTypeRepository.findByProductTypeKey(productTypeKey);
 		
 		if(productType!=null) {
 			productTypeRepository.delete(productType);
 			
-			return productType;
+			
 		}
 		else
 			throw new ResourceNotFoundException("ProductType", "ProducTypeKey", productTypeKey);

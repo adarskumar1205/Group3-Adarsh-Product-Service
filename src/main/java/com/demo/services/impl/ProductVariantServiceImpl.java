@@ -35,7 +35,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
 	}
 
 	@Override
-	public ProductVariantDto getProductVariant(String producVariantKey) {
+	public ProductVariantDto getProductVariant(String producVariantKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
@@ -60,7 +60,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
 	}
 
 	@Override
-	public ProductVariantDto updateProductVariant(ProductVariantDto productVariantDto, String producVariantKey) {
+	public ProductVariantDto updateProductVariant(ProductVariantDto productVariantDto, String producVariantKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
 		
@@ -81,7 +81,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
 	}
 
 	@Override
-	public ProductVariant deleteProductVariant(String producVariantKey) {
+	public ProductVariant deleteProductVariant(String producVariantKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductVariant productVariant = productVariantRepository.findByProductVariantKey(producVariantKey);
 		

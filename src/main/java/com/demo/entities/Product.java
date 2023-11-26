@@ -30,7 +30,7 @@ public class Product {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ProductType productType;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     private Set<ProductCategory> categories;
 	
 	@OneToOne(cascade = CascadeType.ALL)

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.ProductTypeDto;
 import com.demo.entities.ProductType;
+import com.demo.exceptions.ResourceNotFoundException;
 import com.demo.services.ProductTypeService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/productTypes")
@@ -26,13 +29,13 @@ public class ProductTypeController {
 	private ProductTypeService productTypeService;
 
 	@PostMapping
-	public ResponseEntity<ProductTypeDto> createProductType(@RequestBody ProductTypeDto productTypeDto) {
+	public ResponseEntity<ProductTypeDto> createProductType(@Valid @RequestBody ProductTypeDto productTypeDto) {
 		ProductTypeDto savedProductTypeDto = productTypeService.createProductType(productTypeDto);
 		return new ResponseEntity<>(savedProductTypeDto, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{productTypeKey}")
-	public ResponseEntity<ProductTypeDto> getProductTypeByKey(@PathVariable("productTypeKey") String productTypeKey) {
+	public ResponseEntity<ProductTypeDto> getProductTypeByKey(@PathVariable("productTypeKey") String productTypeKey) throws ResourceNotFoundException {
 		ProductTypeDto productTypeDto = productTypeService.getProductType(productTypeKey);
 		return ResponseEntity.ok(productTypeDto);
 	}
@@ -44,14 +47,14 @@ public class ProductTypeController {
 	}
 
 	@DeleteMapping("/{productTypeKey}")
-	public ResponseEntity<String> deleteProductTypeByKey(@PathVariable("productTypeKey") String productTypeKey) {
-		ProductType productType = productTypeService.deleteProductType(productTypeKey);
+	public ResponseEntity<String> deleteProductTypeByKey(@PathVariable("productTypeKey") String productTypeKey) throws ResourceNotFoundException {
+		productTypeService.deleteProductType(productTypeKey);
 		return ResponseEntity.ok("type deleted succesfully");
 	}
 	
 	@PutMapping("/{productTypeKey}")
 	public ResponseEntity<ProductTypeDto> updateProductTypeByKey(@RequestBody ProductTypeDto productTypeDto,
-														@PathVariable("productTypeKey") String productTypeKey) {
+														@PathVariable("productTypeKey") String productTypeKey) throws ResourceNotFoundException {
 		ProductTypeDto updateProductTypeDto = productTypeService.updateProductType(productTypeDto,productTypeKey);
 		if (updateProductTypeDto != null) {
 	        return new ResponseEntity<>(updateProductTypeDto, HttpStatus.OK);

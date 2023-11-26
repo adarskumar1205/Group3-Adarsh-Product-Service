@@ -1,15 +1,21 @@
 package com.demo.dto;
 
-import jakarta.persistence.Column;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class PriceDto {
 	private long id;
 	
-	@Column(nullable = false, unique = true)
+	@NotBlank
+	@Size(min=3,message = "Price Key should have atleast 3 characters")
 	private String priceKey;
 	
+	@NotBlank
 	private int sku;
+	@NotBlank
 	private long centAmount;
+	@NotBlank
 	private String currency;
 	
 	

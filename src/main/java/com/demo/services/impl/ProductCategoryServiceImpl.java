@@ -36,7 +36,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	}
 
 	@Override
-	public ProductCategoryDto getProductCategory(String productCategoryKey) {
+	public ProductCategoryDto getProductCategory(String productCategoryKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductCategory productCategory = productCategoryRepository.findByCategoryKey(productCategoryKey);
 		
@@ -59,7 +59,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	}
 
 	@Override
-	public ProductCategoryDto updateProductCategory(ProductCategoryDto productCategoryDto, String productCategoryKey) {
+	public ProductCategoryDto updateProductCategory(ProductCategoryDto productCategoryDto, String productCategoryKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductCategory productCategory = productCategoryRepository.findByCategoryKey(productCategoryKey);
 		
@@ -77,7 +77,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	}
 
 	@Override
-	public ProductCategoryDto deleteProductCategory(String productCategoryKey) {
+	public ProductCategoryDto deleteProductCategory(String productCategoryKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		ProductCategory productCategory = productCategoryRepository.findByCategoryKey(productCategoryKey);
 		

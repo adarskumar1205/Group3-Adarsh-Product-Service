@@ -2,9 +2,14 @@ package com.demo.dto;
 
 import java.util.Map;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class ProductTypeDto {
 	private long id;
 
+	@NotBlank
+	@Size(min=3,message = "Product Type Key should have atleast 3 characters")
 	private String productTypeKey;
 
 	private Map<String, String> attributeDefination;

@@ -11,12 +11,21 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class ProductVariantDto {
 	private long id;
+	
+	@NotBlank
+	@Size(min=3,message = "Product Variant Key should have atleast 3 characters")
 	private String productVariantKey;
+	
+	@NotBlank
 	private int sku;
+	
 	private Set<Price> prices;
+	
 	@ElementCollection
 	@CollectionTable(name = "Attributes", joinColumns = {@JoinColumn(name = "products_variants_id", referencedColumnName = "id")})
 	@MapKeyColumn(name = "DefinationName")

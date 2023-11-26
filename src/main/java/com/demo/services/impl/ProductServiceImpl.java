@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductDto getProductByKey(String productKey) {
+	public ProductDto getProductByKey(String productKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		Product product = productRepository.findByProductKey(productKey);
 		
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductDto updateProduct(ProductDto productDto,String productKey) {
+	public ProductDto updateProduct(ProductDto productDto,String productKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		Product product = productRepository.findByProductKey(productKey);
 
@@ -89,18 +89,31 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductDto deleteProduct(String productKey) {
+	public void deleteProduct(String productKey) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		Product product = productRepository.findByProductKey(productKey);
 		
 		if(product!=null) {
 			productRepository.delete(product);
-			return mapper.map(product,ProductDto.class);
+			
 		}
 		else
 			throw new ResourceNotFoundException("Product", "ProducKey", productKey);
 		
 	}
+
+	@Override
+	public List<ProductDto> getAllProductsByName(String name) {
+		// TODO Auto-generated method stub
+		List<ProductDto> list = productRepository.findByName(name)
+								.stream()
+								.map((product)->mapper.map(product, ProductDto.class))
+								.collect(Collectors.toList());
+
+		return list;
+	}
+
+	
 
 	
 }
